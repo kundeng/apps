@@ -1,1 +1,7 @@
-An App to demonstrate splunk's ability for data quality management
+An App to demonstrate splunk's ability for data quality management.
+
+Todo:
+1. prototype a dashboard that takes in a search, a set of fields, a set of checks
+   and "run" those checks and finally produces some kind of reports.
+2. Learn what to do to improve this app to handle business rules, conditions and checks.
+3. integrate or develop issue/case management using kvstores.
