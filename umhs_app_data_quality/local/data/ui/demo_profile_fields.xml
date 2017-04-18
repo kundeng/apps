@@ -1,0 +1,52 @@
+<form>
+  <label>demo profile fields</label>
+  
+  <search id="baseSearch">
+    <query>
+      $root$ earliest=$time.earliest$ latest=$time.latest$ |fields *
+    </query>
+  </search>
+    <fieldset submitButton="true">
+    <input type="text" token="root" searchWhenChanged="true">
+      <label>Type Your Search:</label>
+      <default>index=inventory</default>
+    </input>
+    <input type="time" token="time" searchWhenChanged="true">
+      <label>Time</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="multiselect" token="fields">
+      <label>Select fields:</label>
+      <fieldForLabel>column</fieldForLabel>
+      <fieldForValue>column</fieldForValue>
+      <search base="baseSearch">
+        <query> stats dc(*) as * | transpose | table column</query>
+      </search>
+      <delimiter> </delimiter>
+    </input>
+  </fieldset>
+  
+  <row>
+    <panel>
+      <title>Profile Fields</title>
+      <table>
+        <search base="basesSearch" id="search0">
+          <query>table *</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>
