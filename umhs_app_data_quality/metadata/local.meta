@@ -11,3 +11,8 @@ modtime = 1492537398.230706000
 [app/package/check_for_updates]
 version = 6.5.2
 modtime = 1492537398.253363000
+
+[views/data_quality_profiling_demo_dashboard]
+owner = admin
+version = 6.5.2
+modtime = 1492539210.190417000
