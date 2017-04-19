@@ -22,15 +22,15 @@
       <search base="baseSearch">
         <query>stats dc(*) as * | transpose | table column</query>
       </search>
-      <delimiter> </delimiter>
+      <delimiter>,</delimiter>
     </input>
   </fieldset>
   <row>
     <panel>
       <title>Profile Fields</title>
       <table depends="$fields$">
-        <search base="basesSearch" id="search0">
-          <query>table $fields$</query>
+        <search  id="search0">
+          <query>$root$ earliest=$time.earliest$ latest=$time.latest$ |fields + $fields$|table *</query>
         </search>
         <option name="count">20</option>
         <option name="dataOverlayMode">none</option>
