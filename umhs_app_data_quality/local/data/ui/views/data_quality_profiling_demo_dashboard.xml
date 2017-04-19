@@ -4,16 +4,16 @@
     <query>$root$ earliest=$time.earliest$ latest=$time.latest$ |fields *</query>
   </search>
   <fieldset submitButton="true">
-    <input type="text" token="root" searchWhenChanged="true">
-      <label>Type Your Search:</label>
-      <default>index=inventory</default>
-    </input>
     <input type="time" token="time" searchWhenChanged="true">
       <label>Time</label>
       <default>
         <earliest>-24h@h</earliest>
         <latest>now</latest>
       </default>
+    </input>
+    <input type="text" token="root" searchWhenChanged="true">
+      <label>Type Your Search:</label>
+      <default>index=inventory</default>
     </input>
     <input type="multiselect" token="fields">
       <label>Select fields:</label>
@@ -29,9 +29,18 @@
     <panel>
       <title>Profile Fields</title>
       <table depends="$fields$">
-        <search  id="search0">
-          <query>$root$ earliest=$time.earliest$ latest=$time.latest$ |fields + $fields$|table *</query>
+        <search basesearch="baseSearch">
+          <query>fields - _*|fields + $fields$|table *</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
         </search>
+        <!--
+        <search id="search0">
+          <query>$root$ earliest=$time.earliest$ latest=$time.latest$ |fields - _*|fields + $fields$|table *</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+        -->
         <option name="count">20</option>
         <option name="dataOverlayMode">none</option>
         <option name="drilldown">cell</option>
