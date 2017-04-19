@@ -29,7 +29,7 @@
     <panel>
       <title>Profile Fields</title>
       <table depends="$fields$">
-        <search basesearch="baseSearch">
+        <search base="baseSearch">
           <query>fields - _*|fields + $fields$|table *</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
