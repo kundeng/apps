@@ -30,9 +30,7 @@
       <title>Profile Fields</title>
       <table depends="$fields$">
         <search base="baseSearch">
-          <query>fields - _*|fields + $fields$|table *</query>
-          <earliest>$time.earliest$</earliest>
-          <latest>$time.latest$</latest>
+          <query>fields - _*|fields + $fields$|stats count by $fields$</query>
         </search>
         <!--
         <search id="search0">
