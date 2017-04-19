@@ -1,12 +1,9 @@
 <form>
   <label>demo profile fields</label>
-  
   <search id="baseSearch">
-    <query>
-      $root$ earliest=$time.earliest$ latest=$time.latest$ |fields *
-    </query>
+    <query>$root$ earliest=$time.earliest$ latest=$time.latest$ |fields *</query>
   </search>
-    <fieldset submitButton="true">
+  <fieldset submitButton="true">
     <input type="text" token="root" searchWhenChanged="true">
       <label>Type Your Search:</label>
       <default>index=inventory</default>
@@ -23,21 +20,17 @@
       <fieldForLabel>column</fieldForLabel>
       <fieldForValue>column</fieldForValue>
       <search base="baseSearch">
-        <query> stats dc(*) as * | transpose | table column</query>
+        <query>stats dc(*) as * | transpose | table column</query>
       </search>
       <delimiter> </delimiter>
     </input>
   </fieldset>
-  
   <row>
     <panel>
       <title>Profile Fields</title>
       <table>
         <search base="basesSearch" id="search0">
-          <query>table *</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
+          <query>fields $fields$ | table *</query>
         </search>
         <option name="count">20</option>
         <option name="dataOverlayMode">none</option>
