@@ -30,7 +30,7 @@
       <title>Profile Fields</title>
       <table depends="$fields$">
         <search base="basesSearch" id="search0">
-          <query>fields $fields$ | table *</query>
+          <query>table $fields$</query>
         </search>
         <option name="count">20</option>
         <option name="dataOverlayMode">none</option>
