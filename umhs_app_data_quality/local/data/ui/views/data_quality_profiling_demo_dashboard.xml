@@ -1,7 +1,7 @@
 <form>
   <label>demo profile fields</label>
   <search id="baseSearch">
-    <query>$root$ earliest=$time.earliest$ latest=$time.latest$ |fields *</query>
+    <query>earliest=$time.earliest$ latest=$time.latest$ $root$  |fields *|fields - _*</query>
   </search>
   <fieldset submitButton="true">
     <input type="time" token="time" searchWhenChanged="true">
@@ -23,6 +23,7 @@
         <query>stats dc(*) as * | transpose | table column</query>
       </search>
       <delimiter>,</delimiter>
+      <choice value="*">ALL</choice>
     </input>
   </fieldset>
   <row>
@@ -30,7 +31,17 @@
       <title>Profile Fields</title>
       <table depends="$fields$">
         <search base="baseSearch">
-          <query>fields - _*|fields + $fields$|stats count by $fields$</query>
+          <query>
+            <![CDATA[
+          fields - _*|fields + $fields$
+          |foreach * [eval isnull_<<FIELD>>=if(isnull(<<FIELD>>),1,0) 
+                 | eval notnull_<<FIELD>>=if(isnotnull(<<FIELD>>),1,0) | eval count_<<FIELD>>=1]
+          |eventstats count AS _N
+          |stats sum(isnull_*) AS isnull_* sum(notnull_*) AS notnull_* sum(count_*) AS count_* 
+          |foreach *null_* [eval perc<<FIELD>>= <<FIELD>> / count_<<MATCHSEG2>> ] 
+          | transpose  | eval column=split(column,"_") | eval key=mvindex(column,0)| eval field=mvindex(column,1)|fields - column |rename "row 1" AS value| chart values(value) by field, key
+          ]]>
+          </query>
         </search>
         <!--
         <search id="search0">
